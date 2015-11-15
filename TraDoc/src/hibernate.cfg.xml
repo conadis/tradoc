@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+ 
+<hibernate-configuration>
+    <session-factory>
+
+    
+<mapping class="pe.conadis.tradoc.entity.Acceso" />
+<mapping class="pe.conadis.tradoc.entity.AccesoId" />
+<mapping class="pe.conadis.tradoc.entity.MenuSistema" />
+<mapping class="pe.conadis.tradoc.entity.OpcionMenu" />
+<mapping class="pe.conadis.tradoc.entity.OpcionMenuId" />
+<mapping class="pe.conadis.tradoc.entity.Rol" />
+<mapping class="pe.conadis.tradoc.entity.RolUsuario" />
+<mapping class="pe.conadis.tradoc.entity.RolUsuarioId" />
+<mapping class="pe.conadis.tradoc.entity.Sistema" />
+<mapping class="pe.conadis.tradoc.entity.Usuario" />
+  
+<mapping class="pe.conadis.tradoc.entity.Accion" /> 
+<mapping class="pe.conadis.tradoc.entity.AnularDocumento" /> 
+<mapping class="pe.conadis.tradoc.entity.AnularExpediente" /> 
+<mapping class="pe.conadis.tradoc.entity.Atender" /> 
+<mapping class="pe.conadis.tradoc.entity.ControlTipoTramite" /> 
+<mapping class="pe.conadis.tradoc.entity.Courier" /> 
+<mapping class="pe.conadis.tradoc.entity.DerivacionAccion" /> 
+<mapping class="pe.conadis.tradoc.entity.Derivar" /> 
+<mapping class="pe.conadis.tradoc.entity.Devolucion" /> 
+<mapping class="pe.conadis.tradoc.entity.Documento" /> 
+<mapping class="pe.conadis.tradoc.entity.DocumentoPersona" /> 
+<mapping class="pe.conadis.tradoc.entity.EntidadExterna" /> 
+<mapping class="pe.conadis.tradoc.entity.EstadoExpediente" /> 
+<mapping class="pe.conadis.tradoc.entity.EstadosDocumento" /> 
+<mapping class="pe.conadis.tradoc.entity.Expediente" /> 
+<mapping class="pe.conadis.tradoc.entity.ExpedienteDocPersona" /> 
+<mapping class="pe.conadis.tradoc.entity.Feriado" /> 
+<mapping class="pe.conadis.tradoc.entity.FlujoComunicacionUo" /> 
+<mapping class="pe.conadis.tradoc.entity.IncidenciaMensajeria" /> 
+<mapping class="pe.conadis.tradoc.entity.NumeracionDocumento" /> 
+<mapping class="pe.conadis.tradoc.entity.NumeracionPersona" /> 
+<mapping class="pe.conadis.tradoc.entity.OpcionMenu" /> 
+<mapping class="pe.conadis.tradoc.entity.OpcionMenuPK" /> 
+<mapping class="pe.conadis.tradoc.entity.Personal" /> 
+<mapping class="pe.conadis.tradoc.entity.ReactivarDocumento" /> 
+<mapping class="pe.conadis.tradoc.entity.ReactivarExpediente" />  
+<mapping class="pe.conadis.tradoc.entity.TipoDocumento" /> 
+<mapping class="pe.conadis.tradoc.entity.UnidadOrganica" /> 
+    </session-factory>
+</hibernate-configuration>
