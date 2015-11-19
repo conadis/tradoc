@@ -71,7 +71,7 @@ public class Documento implements Serializable {
 	private NumeracionDocumento numeracionDocumento;
 
 	//bi-directional many-to-one association to IncidenciaMensajeria
-	@OneToMany(mappedBy="documento")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "documento")
 	private List<IncidenciaMensajeria> incidenciaMensajerias;
 
 	public Documento() {

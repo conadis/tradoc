@@ -1,7 +1,9 @@
 package pe.conadis.tradoc.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -27,7 +29,7 @@ public class Courier implements Serializable {
 	private String insEstado;
 
 	//bi-directional many-to-one association to IncidenciaMensajeria
-	@OneToMany(mappedBy="courier")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "courier")
 	private List<IncidenciaMensajeria> incidenciaMensajerias;
 
 	public Courier() {

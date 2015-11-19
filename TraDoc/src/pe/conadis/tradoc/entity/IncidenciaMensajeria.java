@@ -1,7 +1,9 @@
 package pe.conadis.tradoc.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Date;
 
 
@@ -41,9 +43,9 @@ public class IncidenciaMensajeria implements Serializable {
 	@Column(name="IND_EST_MENSAJERIA")
 	private String indEstMensajeria;
 
-	//bi-directional many-to-one association to Courier
-	@ManyToOne
-	@JoinColumn(name="COD_COURIER")
+	//bi-directional many-to-one association to Courier	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COD_COURIER")
 	private Courier courier;
 
 	//bi-directional many-to-one association to Documento
