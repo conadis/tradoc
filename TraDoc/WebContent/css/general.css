@@ -289,6 +289,23 @@ table {
 	border: 0;
 }
 
+#container-search input.button-image-complete-rexp {
+	width: 30px;
+	height: 25px;
+	font-family: "Stag Sans Book", Arial, sans-serif;
+	font-size: 15px;
+	background: url(../images/button-search.png);
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	line-height: 26px;
+	display: block;
+	cursor: pointer;
+	margin: 0;
+	margin-left:0px;
+	border: 0;
+}
+
 #container-search input.button-image-complete[disabled] { /* Text and background colour, medium red on light yellow */
 	color:#ccc;
 cursor: default;
