@@ -60,7 +60,7 @@
 		<filter-name>filter</filter-name>			
 		<url-pattern>/*</url-pattern>		
 	</filter-mapping>
-
+	 -->
 	<servlet>			
 		<servlet-name>recargaServicio</servlet-name>			
 		<servlet-class>bbva.sca.api.servlet.ServletRecargaServicio</servlet-class>		
@@ -71,5 +71,5 @@
 		<url-pattern>/recargaServicio</url-pattern>		
 	</servlet-mapping>
 
-		 -->
+	
 </web-app>
