@@ -130,14 +130,14 @@ charset="utf-8"></script>
 		<nav id="nav-main">
 			<div id="main-primary">
 				<div class="list-group panel">
-					<c:forEach items="${lstMenuSistema}" var="menu" >
+					<c:forEach items="${__MENU_SISTEMA__}" var="menu" >
 						<a href="#grupo${menu.codMenu}" data-toggle="collapse" >
-							${menu.desMenu}<span class="spanCollapseMenu glyphicon glyphicon-chevron-down"></span>
+							<div class="${menu.urlIcon}"></div>${menu.desMenu}<span class="spanCollapseMenu glyphicon glyphicon-chevron-down"></span>
 						</a>
 						<div class="collapse" id="grupo${menu.codMenu}">
 							<c:forEach items="${menu.opcionMenus}" var="opcion" >
 								<a href="#" 
-								onclick="${opcion.url}">${opcion.desOpcMenu}</a>
+								onclick="${opcion.url}"><div class="${opcion.urlIcon}"></div>${opcion.desOpcMenu}</a>
 							</c:forEach>
 					    </div>
 					</c:forEach>
