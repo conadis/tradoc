@@ -29,6 +29,7 @@ public class OpcionMenu implements java.io.Serializable {
 	private String desOpcMenu;
 	private String indEstado;
 	private String url;
+	private String urlIcon;
 	private Set<Acceso> accesos = new HashSet<Acceso>(0);
 
 	public OpcionMenu() {
@@ -40,12 +41,13 @@ public class OpcionMenu implements java.io.Serializable {
 	}
 
 	public OpcionMenu(OpcionMenuId id, MenuSistema menuSistema,
-			String desOpcMenu, String indEstado, String url, Set<Acceso> accesos) {
+			String desOpcMenu, String indEstado, String url, String urlIcon, Set<Acceso> accesos) {
 		this.id = id;
 		this.menuSistema = menuSistema;
 		this.desOpcMenu = desOpcMenu;
 		this.indEstado = indEstado;
 		this.url = url;
+		this.urlIcon = urlIcon;
 		this.accesos = accesos;
 	}
 
@@ -96,6 +98,15 @@ public class OpcionMenu implements java.io.Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@Column(name = "URL_ICON", length = 100)
+	public String getUrlIcon() {
+		return urlIcon;
+	}
+
+	public void setUrlIcon(String urlIcon) {
+		this.urlIcon = urlIcon;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "opcionMenu")
