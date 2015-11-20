@@ -32,9 +32,9 @@ Fin Bordes para IE7 -->
 		
 		$.post("../login/login.htm", $("#login").serialize(), function(data) {
 			if ($.trim(data) == 'SUCCESS'){
-				// url_redirect({url: "../login/index.htm",
-				//		          method: "post"
-				//		         });
+				   url_redirect({url: "../login/index.htm",
+						          method: "post"
+						         });
 			}else{
 				alert(data);
 			}

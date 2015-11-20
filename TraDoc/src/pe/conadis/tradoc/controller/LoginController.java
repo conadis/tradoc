@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
@@ -88,14 +89,12 @@ public class LoginController {
 //		return "menu/plantilla";
 //	}
 	
-	@RequestMapping(value = "/login/login.htm", method = RequestMethod.GET)
-	public String login2( HttpServletRequest request) {
+	@RequestMapping(value = "/login/login.htm", method = RequestMethod.POST)
+	public @ResponseBody  String login2( HttpServletRequest request) {
 		String strResult = Constants.SUCCESS;
 		Usuario usuario = new Usuario();
 		usuario.setCodUsuario(String.valueOf(request.getParameter("codUsuario")).toUpperCase());
 		usuario.setPassword(String.valueOf(request.getParameter("password")).toUpperCase());
-		usuario.setCodUsuario("RBURNEO");
-		usuario.setPassword("RBURNEO");		
 		try {
 		
 			if (!usuario.getCodUsuario().trim().equals("") && 
@@ -131,8 +130,8 @@ public class LoginController {
 		
 		request.setAttribute("result", strResult);
 		System.out.println(strResult);
-		//return "result";
-		return "menu/plantilla";
+		return strResult;
+		//return "menu/plantilla";
 	}
 	
 	@RequestMapping(value = "/login/index.htm", method = RequestMethod.POST)
