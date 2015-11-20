@@ -40,7 +40,10 @@ public class Constants {
 	public static final String PJ_FOOTER = "Personas Jurídicas - Pequeñas, Medianas y Grandes Empresas";
 	
 	
-	
+	public static final String __CURRENT_USER__ = "__CURRENT_USER__";
+	public static final String __MENU_SISTEMA__ = "__MENU_SISTEMA__";
+	public static final String STRTING_EMPTY = "";
+	public static final String SUCCESS = "SUCCESS";
 	public static class EstadoExpediente{
 		public static final Integer ESTADO_REGISTRADO = 1;
 		public static final Integer ESTADO_PENDIENTE = 2;
