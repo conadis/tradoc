@@ -18,6 +18,7 @@
  
     <context:annotation-config />
     <context:component-scan base-package="pe.conadis.tradoc.controller" />
+    
  
  
 	
@@ -79,6 +80,10 @@
     <bean id="usuarioDAO" class="pe.conadis.tradoc.dao.impl.UsuarioDaoImpl"></bean>
     <bean id="usuarioManager" class="pe.conadis.tradoc.service.impl.UsuarioManagerImpl"></bean>  
     <bean id="MenuSistemaDAO" class="pe.conadis.tradoc.dao.impl.MenuSistemaDAOImpl"></bean>
+    
+    <bean id="expedienteDAO" class="pe.conadis.tradoc.dao.impl.ExpedienteDAOImpl"></bean>
+    <bean id="expedienteManager" class="pe.conadis.tradoc.service.impl.ExpedienteManagerImpl"></bean>
+    
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 		
     <tx:annotation-driven />
