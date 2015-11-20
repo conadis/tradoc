@@ -21,43 +21,45 @@ public class UsuarioDaoImpl extends AbstractDAO<Usuario> implements UsuarioDAO {
 	
 	@Transactional
 	public Usuario verifyPass(Usuario usuario) {
-		try{
-
-		usuario = (Usuario)this.getSessionFactory().getCurrentSession().
-				createQuery("from Usuario where codUsuario =:codUsuario")  
-		          .setParameter("codUsuario", usuario.getCodUsuario())
-		          .uniqueResult();		
+		usuario = (Usuario) this.getSessionFactory().getCurrentSession()
+				.createQuery("from Usuario "
+						+ " where codUsuario =:codUsuario "
+						+ " and password =:password")
+				.setParameter("codUsuario", usuario.getCodUsuario())
+				.setParameter("password", usuario.getPassword())
+				.uniqueResult();
 		return usuario;
-		} catch(Exception ex){
-			ex.printStackTrace();
-			return null;
-		}
 	}
 	@Transactional
-	public List<OpcionMenu> obtenerOpcionMenu(Usuario usuario) throws Exception{
+	public List<OpcionMenu> obtenerOpcionMenu(Usuario usuario) throws Exception {
 		List<OpcionMenu> lstOpcionMenu = new ArrayList<OpcionMenu>();
-		usuario = (Usuario)this.getSessionFactory().getCurrentSession().
-				createQuery("from Usuario u"
-						+ " left join fetch u.rolUsuarios ru "
-						+ " left join fetch ru.rol rol "
-						+ " left join fetch rol.accesos ac "
-						+ " left join fetch ac.opcionMenu om "
-						+ " left join fetch om.menuSistema ms "
-						
-						+ "where u.codUsuario =:codUsuario")  
-		          .setParameter("codUsuario", usuario.getCodUsuario())
-		          .uniqueResult();
-		if(usuario!=null && usuario.getRolUsuarios()!=null){
-			Iterator<RolUsuario> itRolUsuario = usuario.getRolUsuarios().iterator();
+		usuario = (Usuario) this
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"from Usuario u" + " left join fetch u.rolUsuarios ru "
+								+ " left join fetch ru.rol rol "
+								+ " left join fetch rol.accesos ac "
+								+ " left join fetch ac.opcionMenu om "
+								+ " left join fetch om.menuSistema ms "
+
+								+ "where u.codUsuario =:codUsuario")
+				.setParameter("codUsuario", usuario.getCodUsuario())
+				.uniqueResult();
+		if (usuario != null && usuario.getRolUsuarios() != null) {
+			Iterator<RolUsuario> itRolUsuario = usuario.getRolUsuarios()
+					.iterator();
 			while (itRolUsuario.hasNext()) {
 				RolUsuario rolUsuario = itRolUsuario.next();
-				if(rolUsuario.getRol()!=null && rolUsuario.getRol().getAccesos()!=null){
-					Iterator<Acceso> itAccesos = rolUsuario.getRol().getAccesos().iterator();
-					while(itAccesos.hasNext()){
+				if (rolUsuario.getRol() != null
+						&& rolUsuario.getRol().getAccesos() != null) {
+					Iterator<Acceso> itAccesos = rolUsuario.getRol()
+							.getAccesos().iterator();
+					while (itAccesos.hasNext()) {
 						Acceso acceso = itAccesos.next();
-						if(acceso.getOpcionMenu()!=null)
+						if (acceso.getOpcionMenu() != null)
 							lstOpcionMenu.add(acceso.getOpcionMenu());
-					}	
+					}
 				}
 			}
 		}
