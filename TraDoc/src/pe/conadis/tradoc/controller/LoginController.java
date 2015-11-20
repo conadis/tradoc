@@ -9,15 +9,17 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
 import pe.conadis.tradoc.entity.MenuSistema;
-
 import pe.conadis.tradoc.entity.Usuario;
 import pe.conadis.tradoc.service.UsuarioManager;
+import pe.conadis.tradoc.util.Constants;
 
 @Controller
 public class LoginController {
@@ -87,20 +89,54 @@ public class LoginController {
 //	}
 	
 	@RequestMapping(value = "/login/login.htm", method = RequestMethod.GET)
-	public String verifyPass(HttpServletRequest request) {
-		String strCodUsuario = request.getParameter("codUsuario");
-		List<MenuSistema> lstMenuSistema =  new ArrayList<MenuSistema>();
+	public String login2( HttpServletRequest request) {
+		String strResult = Constants.SUCCESS;
+		Usuario usuario = new Usuario();
+		usuario.setCodUsuario(String.valueOf(request.getParameter("codUsuario")).toUpperCase());
+		usuario.setPassword(String.valueOf(request.getParameter("password")).toUpperCase());
+		usuario.setCodUsuario("RBURNEO");
+		usuario.setPassword("RBURNEO");		
 		try {
-			if (strCodUsuario!=null){
-				lstMenuSistema = usuarioManager.obtnerMenuPorUsuario(strCodUsuario);	
+		
+			if (!usuario.getCodUsuario().trim().equals("") && 
+					!usuario.getPassword().trim().equals("")){
+				
+				System.out.println(usuario.getCodUsuario());
+				System.out.println(usuario.getPassword());
+				usuario = usuarioManager.verifyPass(usuario);
+				if (usuario == null){
+					strResult = "Credenciales incorrectas, intente nuevamente";
+				}
+			}else{
+				strResult = "Ingrese las Crendenciales";
 			}
-			lstMenuSistema = this.excluirMenuRepetido(lstMenuSistema);
-			request.getSession().setAttribute("lstMenuSistema", lstMenuSistema);
+			System.out.println(usuario.getDesCorreo());
 		} catch (Exception e) {
-			
-			logger.error("Error en login ->"+e);
+			logger.error(e);
 		}
-
+		if (strResult.equals(Constants.SUCCESS)){
+			List<MenuSistema> lstMenuSistema =  new ArrayList<MenuSistema>();
+			try {
+				if (usuario.getCodUsuario()!=null){
+					lstMenuSistema = usuarioManager.obtnerMenuPorUsuario(usuario.getCodUsuario());	
+				}
+				lstMenuSistema = this.excluirMenuRepetido(lstMenuSistema);
+				request.getSession().setAttribute(Constants.__CURRENT_USER__, usuario);
+				request.getSession().setAttribute(Constants.__MENU_SISTEMA__, lstMenuSistema);
+			} catch (Exception e) {
+				
+				logger.error("Error en login ->"+e);
+			}	
+		}
+		
+		request.setAttribute("result", strResult);
+		System.out.println(strResult);
+		//return "result";
+		return "menu/plantilla";
+	}
+	
+	@RequestMapping(value = "/login/index.htm", method = RequestMethod.POST)
+	public String index(HttpServletRequest request) {
 		return "menu/plantilla";
 	}
 	
