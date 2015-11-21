@@ -3,12 +3,7 @@ package pe.conadis.tradoc.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import oracle.net.aso.e;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.google.gson.Gson;
 
 import pe.conadis.tradoc.entity.AnularExpediente;
 import pe.conadis.tradoc.entity.Documento;
@@ -73,8 +66,8 @@ public class ExpedienteController {
 		return "mesa_parte/expedienteAgregar";
 	}
 	
-	@RequestMapping(value = "/mesa_parte/addExpediente.htm", method = RequestMethod.POST)
-	public @ResponseBody String addExpediente(@ModelAttribute(value="expedienteVO") ExpedienteVO expedienteVO , HttpServletRequest request) throws Exception 
+	@RequestMapping(value = "/addExpediente", method = RequestMethod.POST)
+	public @ResponseBody String addExpediente(@ModelAttribute(value="expedienteVO") ExpedienteVO expedienteVO , ModelMap model) throws Exception 
 	{
 				Expediente expediente = new Expediente();
 				
@@ -102,7 +95,7 @@ public class ExpedienteController {
 				expediente.setEstadoExpediente(estadoExpediente);//ENTITY
 				expediente.setExpedienteDocPersonas(listaExpedienteDocPersona);//LIST
 				
-				
+				System.out.println("ADD EXPEDIENTE");
 				
 				expediente.setIndExpediente(expedienteVO.getIndExpediente());
 				expediente.setInteresado(expedienteVO.getInteresado());
@@ -121,7 +114,7 @@ public class ExpedienteController {
 					expediente.setFecModificacion(new Date());
 					expedienteManager.update(expediente);
 				}
-				return "mesa_parte/expedienteAgregar";
+				return "succes";
 	}						
 	
 	

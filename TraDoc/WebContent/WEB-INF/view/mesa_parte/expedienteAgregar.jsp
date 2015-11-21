@@ -60,6 +60,16 @@
 	                    }
                     
                     
+                   /* $("#form").submit(function() {  
+        				$.post($(this).attr("action"), $(this).serialize(), function(html) {
+        					$("#formsContent").replaceWith(html);
+        					$('html, body').animate({ scrollTop: $("#message").offset().top }, 500);
+        				});
+        				return false;  
+        				});			
+        			});*/
+                    
+                    
 			    });
 
 				$(function() {
@@ -76,16 +86,16 @@
 	                    });
 					
                     
-	                    alert("CARGANDO...");
-	                    $('#guardar').click(function(){
-	                		
+	                   
+	                   /* $('#guardar').click(function(){
+	                    	alert("entrando...");
 	                    	jQuery("#frmAgregarExpediente").validationEngine('validate');
 	                    	var b = true;
 	                    	var v = true;
-								alert("entrando...");			
+											
 							 if(b && v){
 							 	//cosnsole.log("test idafiche ","${afiche.idafiche}");
-						 		$('#frmAgregarExpediente').ajaxForm({url:"../mesa_parte/addExpediente.htm",type:"post", success:function(data){
+						 		$('#frmAgregarExpediente').ajaxForm({url:"../addExpediente.htm",type:"post", success:function(data){
 						 					alert("termino de enviar...");	
 						 					if(data =='false'){
 						 						alert("Ya existe el expediente, consulte con el administrador");
@@ -116,7 +126,7 @@
 							 }else{
 							 	return false;
 							 }
-	                    });
+	                    });*/
 
 
 
@@ -219,7 +229,7 @@
 </head>
 <body>
 
-
+				
                 <div  class="overlay" id="overlay" style="display:none;">
                 	<div class="box" id="box" style="width:800px;top: 18%;">
                     <a class="boxclose" id="boxclose" onclick="cerrar();"></a>
@@ -231,8 +241,7 @@
 					        <div id="title-header-popup">Registrar Expediente</div>
 					    </c:otherwise>
 					</c:choose>
-                        <form:form id="frmAgregarExpediente" method="post" class="scrollbar"  modelAttribute="expedienteVO">
-
+                        <form:form  id="frmAgregarExpediente" action="/TechMuroWAS/addExpediente" enctype="multipart/form-data" method="post" class="scrollbar" modelAttribute="expedienteVO">
                             <ul id="body-popup">
                              <fieldset  class="fieldset">
     						<legend>Registro Expediente:</legend>
