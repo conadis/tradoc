@@ -200,7 +200,7 @@ public class Usuario implements java.io.Serializable {
 	}
 
 	// bi-directional many-to-one association to UnidadOrganica
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "COD_UO")
 	public UnidadOrganica getUnidadOrganica() {
 		return this.unidadOrganica;
@@ -211,7 +211,7 @@ public class Usuario implements java.io.Serializable {
 	}
 
 	// bi-directional many-to-one association to Personal
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "COD_PERSONA")
 	public Personal getPersonal() {
 		return this.personal;
