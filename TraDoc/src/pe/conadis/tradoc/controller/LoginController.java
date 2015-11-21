@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
 import pe.conadis.tradoc.entity.MenuSistema;
+import pe.conadis.tradoc.entity.Personal;
+import pe.conadis.tradoc.entity.Rol;
+import pe.conadis.tradoc.entity.UnidadOrganica;
 import pe.conadis.tradoc.entity.Usuario;
 import pe.conadis.tradoc.service.UsuarioManager;
 import pe.conadis.tradoc.util.Constants;
@@ -38,19 +41,24 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login/header.htm", method = RequestMethod.GET)
 	public String cargaHeader(ModelMap map, HttpServletRequest request) {
-		IILDPeUsuario usuario= new IILDPeUsuario();
-		if(usuario != null){		
-			String idUsuario = usuario.getUID();
-			String nombre    = usuario.getNombre();
-			String apellido1 = usuario.getApellido1();
-			String apellido2 = usuario.getApellido2();
-			String user =  nombre + " " + apellido1 + " " + apellido2;
-			request.getSession().setAttribute("usuario", user);
-			request.getSession().setAttribute("idusuario", idUsuario);
+		if(request.getSession().getAttribute("usuarioLogin")!=null){
+		 Usuario usuario=(Usuario)request.getSession().getAttribute("usuarioLogin");
+		 Personal personal=usuario.getPersonal();
+		 UnidadOrganica uo=usuario.getUnidadOrganica();
+		 //Rol rol=usuario.getRolUsuarios();
+		 
+			
+		 if(personal!=null){
+			String usuarioNombreCabecera    = personal.getNombres()+" "+personal.getApeParteno()+" "+personal.getApeMaterno();
+			request.getSession().setAttribute("usuarioNombreCabecera", usuarioNombreCabecera);
+			request.getSession().setAttribute("codUsuario", usuario.getCodUsuario());
+		    }
+		    if(uo!=null){
+				request.getSession().setAttribute("UONombre", uo.getDesUo());
+				request.getSession().setAttribute("UOCodigo", uo.getCodUo());
+		    }
 		}
-		
-		
-		
+
 		
 		return "menu/header";
 	}
@@ -100,11 +108,12 @@ public class LoginController {
 			if (!usuario.getCodUsuario().trim().equals("") && 
 					!usuario.getPassword().trim().equals("")){
 				
-				System.out.println(usuario.getCodUsuario());
-				System.out.println(usuario.getPassword());
 				usuario = usuarioManager.verifyPass(usuario);
+				request.getSession().setAttribute("usuarioLogin", usuario);
 				if (usuario == null){
 					strResult = "Credenciales incorrectas, intente nuevamente";
+				}else{
+					usuario=usuarioManager.finById(usuario.getIdUsuario());
 				}
 			}else{
 				strResult = "Ingrese las Crendenciales";
