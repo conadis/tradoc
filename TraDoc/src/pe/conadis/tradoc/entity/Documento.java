@@ -1,7 +1,9 @@
 package pe.conadis.tradoc.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -41,6 +43,9 @@ public class Documento implements Serializable {
 
 	@Column(name="IND_DOC_EXTERNO")
 	private String indDocExterno;
+	
+	@Column(name="DESCRIPCION")
+	private String descripcion;
 
 	//bi-directional many-to-one association to AnularDocumento
 	@OneToMany(mappedBy="documento")
@@ -239,4 +244,13 @@ public class Documento implements Serializable {
 		return incidenciaMensajeria;
 	}
 
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	
 }

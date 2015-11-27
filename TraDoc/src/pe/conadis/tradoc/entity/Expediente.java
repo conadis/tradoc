@@ -53,8 +53,8 @@ public class Expediente implements Serializable {
 	@Column(name="FEC_MODIFICACION")
 	private Date fecModificacion;
 
-	@Column(name="IND_EXPEDIENTE")
-	private String indExpediente;
+	/*@Column(name="IND_EXPEDIENTE")
+	private String indExpediente;*/
 
 	@Column(name="INTERESADO")
 	private String interesado;
@@ -180,13 +180,13 @@ public class Expediente implements Serializable {
 		this.fecModificacion = fecModificacion;
 	}
 
-	public String getIndExpediente() {
+	/*public String getIndExpediente() {
 		return this.indExpediente;
 	}
 
 	public void setIndExpediente(String indExpediente) {
 		this.indExpediente = indExpediente;
-	}
+	}*/
 
 	public String getInteresado() {
 		return this.interesado;

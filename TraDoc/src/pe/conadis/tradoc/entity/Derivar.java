@@ -45,9 +45,6 @@ public class Derivar implements Serializable {
 	@Column(name="COD_USU_RECEPCION")
 	private String codUsuRecepcion;
 
-	@Column(name="DESCRIPCION")
-	private String descripcion;
-
 	@Column(name="FEC_CREACION")
 	private Date fecCreacion;
 
@@ -173,14 +170,6 @@ public class Derivar implements Serializable {
 
 	public void setCodUsuRecepcion(String codUsuRecepcion) {
 		this.codUsuRecepcion = codUsuRecepcion;
-	}
-
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 
 	public Date getFecCreacion() {

@@ -27,6 +27,7 @@ public class MenuSistema implements java.io.Serializable {
 	private String desMenu;
 	private String indEstado;
 	private String urlIcon;
+	
 	private Set<OpcionMenu> opcionMenus = new HashSet<OpcionMenu>(0);
 
 	public MenuSistema() {

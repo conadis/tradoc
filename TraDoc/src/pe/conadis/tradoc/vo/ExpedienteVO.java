@@ -7,53 +7,44 @@ import java.util.Date;
 public class ExpedienteVO {
 	
 	//EXPEDIENTE
-	private Integer codCorrelativo;
-	private Integer codExpediente; //PK
-	private Integer canDias;
+	private String codCorrelativo;
+	private String codExpediente; //PK
+	private String canDias;
 	private String codUsuario;
 	private String desAsunto;	
 	private String desDocumento;
 	private String desUtd;
 	private String descripcion;
 	private String detalle;
-	private Date fecCreacion;
+	private String fecCreacion;
 	private String interesado;
-	private Integer numFolios;
+	private String numFolios;
 	private String indExpediente;//PREGUNTAR
-	private Integer codEntidad;
+	private String codEntidad;
+	
+	private String codEstadoExpediente;
 
 	//NUMERACION DOCUMENTO
 		
 	private String anioDocumento;	
 	private String indEstado;
-	private Integer numDocumento;
-	
-	
-	//METODOS
-	
-	
-	public Integer getCanDias() {
-		return canDias;
-	}
-	public Integer getCodCorrelativo() {
+	private String numDocumento;
+	public String getCodCorrelativo() {
 		return codCorrelativo;
 	}
-	public void setCodCorrelativo(Integer codCorrelativo) {
+	public void setCodCorrelativo(String codCorrelativo) {
 		this.codCorrelativo = codCorrelativo;
 	}
-	public Integer getCodEntidad() {
-		return codEntidad;
-	}
-	public void setCodEntidad(Integer codEntidad) {
-		this.codEntidad = codEntidad;
-	}
-	public Integer getCodExpediente() {
+	public String getCodExpediente() {
 		return codExpediente;
 	}
-	public void setCodExpediente(Integer codExpediente) {
+	public void setCodExpediente(String codExpediente) {
 		this.codExpediente = codExpediente;
 	}
-	public void setCanDias(Integer canDias) {
+	public String getCanDias() {
+		return canDias;
+	}
+	public void setCanDias(String canDias) {
 		this.canDias = canDias;
 	}
 	public String getCodUsuario() {
@@ -92,10 +83,10 @@ public class ExpedienteVO {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	public Date getFecCreacion() {
+	public String getFecCreacion() {
 		return fecCreacion;
 	}
-	public void setFecCreacion(Date fecCreacion) {
+	public void setFecCreacion(String fecCreacion) {
 		this.fecCreacion = fecCreacion;
 	}
 	public String getInteresado() {
@@ -104,10 +95,10 @@ public class ExpedienteVO {
 	public void setInteresado(String interesado) {
 		this.interesado = interesado;
 	}
-	public Integer getNumFolios() {
+	public String getNumFolios() {
 		return numFolios;
 	}
-	public void setNumFolios(Integer numFolios) {
+	public void setNumFolios(String numFolios) {
 		this.numFolios = numFolios;
 	}
 	public String getIndExpediente() {
@@ -115,6 +106,18 @@ public class ExpedienteVO {
 	}
 	public void setIndExpediente(String indExpediente) {
 		this.indExpediente = indExpediente;
+	}
+	public String getCodEntidad() {
+		return codEntidad;
+	}
+	public void setCodEntidad(String codEntidad) {
+		this.codEntidad = codEntidad;
+	}
+	public String getCodEstadoExpediente() {
+		return codEstadoExpediente;
+	}
+	public void setCodEstadoExpediente(String codEstadoExpediente) {
+		this.codEstadoExpediente = codEstadoExpediente;
 	}
 	public String getAnioDocumento() {
 		return anioDocumento;
@@ -128,17 +131,11 @@ public class ExpedienteVO {
 	public void setIndEstado(String indEstado) {
 		this.indEstado = indEstado;
 	}
-	public Integer getNumDocumento() {
+	public String getNumDocumento() {
 		return numDocumento;
 	}
-	public void setNumDocumento(Integer numDocumento) {
+	public void setNumDocumento(String numDocumento) {
 		this.numDocumento = numDocumento;
 	}
 	
-	
-	
-	
-	
-	
-
 }

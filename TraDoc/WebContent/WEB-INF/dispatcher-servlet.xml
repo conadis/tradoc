@@ -83,6 +83,14 @@
     
     <bean id="expedienteDAO" class="pe.conadis.tradoc.dao.impl.ExpedienteDAOImpl"></bean>
     <bean id="expedienteManager" class="pe.conadis.tradoc.service.impl.ExpedienteManagerImpl"></bean>
+    <bean id="numeracionDocumentoDAO" class="pe.conadis.tradoc.dao.impl.NumeracionDocumentoDAOImpl"></bean>
+    <bean id="numeracionDocumentoManager" class="pe.conadis.tradoc.service.impl.NumeracionDocumentoManagerImpl"></bean>
+    <bean id="accionDAO" class="pe.conadis.tradoc.dao.impl.AccionDAOImpl"></bean>
+    <bean id="accionManager" class="pe.conadis.tradoc.service.impl.AccionManagerImpl"></bean>
+    <bean id="derivarDAO" class="pe.conadis.tradoc.dao.impl.DerivarDAOImpl"></bean>
+    <bean id="derivarManager" class="pe.conadis.tradoc.service.impl.DerivarManagerImpl"></bean>
+    <bean id="documentoDAO" class="pe.conadis.tradoc.dao.impl.DocumentoDAOImpl"></bean>
+    <bean id="documentoManager" class="pe.conadis.tradoc.service.impl.DocumentoManagerImpl"></bean>
     
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 		

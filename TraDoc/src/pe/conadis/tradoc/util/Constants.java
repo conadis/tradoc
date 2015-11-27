@@ -50,4 +50,8 @@ public class Constants {
 		public static final Integer ESTADO_ATENDIDO = 3;
 		public static final Integer ESTADO_ANULADO = 4;
 	}
+	
+	public static class TipoDocumento{
+		public static final Integer EXPEDIENTE = 17;
+	}
 }

@@ -47,7 +47,7 @@ public class OpcionMenu implements java.io.Serializable {
 		this.desOpcMenu = desOpcMenu;
 		this.indEstado = indEstado;
 		this.url = url;
-		this.urlIcon = urlIcon;
+		//this.urlIcon = urlIcon;
 		this.accesos = accesos;
 	}
 

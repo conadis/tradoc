@@ -1,8 +1,10 @@
 package pe.conadis.tradoc.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 
@@ -59,6 +61,9 @@ public class NumeracionDocumento implements Serializable {
 
 	@Column(name="NUM_DOCUMENTO")
 	private Integer numDocumento;
+	
+	@Column(name="IND_EXPEDIENTE")
+	private String indExpediente;
 
 	//bi-directional many-to-one association to Documento
 	@OneToMany(mappedBy="numeracionDocumento")
@@ -251,6 +256,14 @@ public class NumeracionDocumento implements Serializable {
 
 	public void setUnidadOrganica(UnidadOrganica unidadOrganica) {
 		this.unidadOrganica = unidadOrganica;
+	}
+	
+	public String getIndExpediente() {
+		return this.indExpediente;
+	}
+
+	public void setIndExpediente(String indExpediente) {
+		this.indExpediente = indExpediente;
 	}
 
 }
