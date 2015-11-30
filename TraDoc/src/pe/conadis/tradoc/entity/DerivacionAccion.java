@@ -1,8 +1,9 @@
 package pe.conadis.tradoc.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
-import java.sql.Date;
 
 
 /**

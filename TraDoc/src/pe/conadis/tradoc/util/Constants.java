@@ -44,7 +44,16 @@ public class Constants {
 	public static final String __MENU_SISTEMA__ = "__MENU_SISTEMA__";
 	public static final String STRTING_EMPTY = "";
 	public static final String SUCCESS = "SUCCESS";
+	
+	//AGREGADO CC
 	public static class EstadoExpediente{
+		public static final Integer ESTADO_REGISTRADO = 1;
+		public static final Integer ESTADO_PENDIENTE = 2;
+		public static final Integer ESTADO_ATENDIDO = 3;
+		public static final Integer ESTADO_ANULADO = 4;
+	}
+	
+	public static class EstadoDocumentos{
 		public static final Integer ESTADO_REGISTRADO = 1;
 		public static final Integer ESTADO_PENDIENTE = 2;
 		public static final Integer ESTADO_ATENDIDO = 3;
@@ -54,4 +63,26 @@ public class Constants {
 	public static class TipoDocumento{
 		public static final Integer EXPEDIENTE = 17;
 	}
+	
+	public static final String IND_DOC_EXTERNO  = "1";
+	public static final String ESTADO_ACTIVO  = "1";
+	
+	public static class EstadoRecepcion{
+		public static final String IND_RECEPCION_EXT  = "1";
+	}
+	
+	public static class EstadoResponsableAtencion{
+		public static final String IND_RESPONSABLE_EXT_UO  = "1";
+		public static final String IND_RESPONSABLE_UO_UO  = "0";
+		
+	}
+	
+	public static class IndicadorDerivacion{
+		public static final String IND_DERIVACION_UO  = "2";
+		
+	}
+	
+	public static final String IND_DERIVACION_UO  = "2";
+	public static final String IND_INICIAL_DEFAULT  = "0";
+	
 }

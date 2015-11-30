@@ -21,6 +21,7 @@ public class ExpedienteVO {
 	private String numFolios;
 	private String indExpediente;//PREGUNTAR
 	private String codEntidad;
+	private String desEntidad;
 	
 	private String codEstadoExpediente;
 
@@ -29,6 +30,15 @@ public class ExpedienteVO {
 	private String anioDocumento;	
 	private String indEstado;
 	private String numDocumento;
+	
+	
+	
+	public String getDesEntidad() {
+		return desEntidad;
+	}
+	public void setDesEntidad(String desEntidad) {
+		this.desEntidad = desEntidad;
+	}
 	public String getCodCorrelativo() {
 		return codCorrelativo;
 	}

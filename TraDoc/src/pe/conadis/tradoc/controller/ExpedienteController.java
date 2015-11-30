@@ -21,9 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pe.conadis.tradoc.entity.Accion;
 import pe.conadis.tradoc.entity.AnularExpediente;
+import pe.conadis.tradoc.entity.ControlTipoTramite;
+import pe.conadis.tradoc.entity.DerivacionAccion;
+import pe.conadis.tradoc.entity.Derivar;
 import pe.conadis.tradoc.entity.Documento;
 import pe.conadis.tradoc.entity.EntidadExterna;
 import pe.conadis.tradoc.entity.EstadoExpediente;
+import pe.conadis.tradoc.entity.EstadosDocumento;
 import pe.conadis.tradoc.entity.Expediente;
 import pe.conadis.tradoc.entity.ExpedienteDocPersona;
 import pe.conadis.tradoc.entity.NumeracionDocumento;
@@ -31,6 +35,7 @@ import pe.conadis.tradoc.entity.TipoDocumento;
 import pe.conadis.tradoc.entity.UnidadOrganica;
 import pe.conadis.tradoc.entity.Usuario;
 import pe.conadis.tradoc.service.AccionManager;
+import pe.conadis.tradoc.service.DerivacionAccionManager;
 import pe.conadis.tradoc.service.DerivarManager;
 import pe.conadis.tradoc.service.DocumentoManager;
 import pe.conadis.tradoc.service.ExpedienteManager;
@@ -65,6 +70,9 @@ public class ExpedienteController {
 	
 	@Autowired
 	private NumeracionDocumentoManager numeracionDocumentoManager;
+	
+	@Autowired
+	private DerivacionAccionManager derivacionAccionManager;
 	
 	@RequestMapping(value = "/mesa_parte/mesaParte.htm", method = RequestMethod.GET)
 	public String cargaMesaParte(ModelMap map) {
@@ -101,6 +109,7 @@ public class ExpedienteController {
 	public String upAgregarDocumentoExt(ModelMap map,HttpServletRequest request) throws Exception {
 		
 		Usuario usuario=(Usuario)request.getSession().getAttribute("usuarioLogin");
+		Expediente expedienteSession = (Expediente)request.getSession().getAttribute("__Expediente_Session");
 		request.getSession().removeAttribute("__listaUO_Accion");
 		
 		DocumentoVO documentoVO  =new DocumentoVO();
@@ -121,6 +130,8 @@ public class ExpedienteController {
 		Gson g = new Gson();
 		map.addAttribute("documentoVO", documentoVO);
 		map.addAttribute("dataJsonUo", g.toJson(y));
+		map.addAttribute("codentExt",expedienteSession.getEntidadExterna().getCodEntidad().toString());
+		map.addAttribute("desentExt",expedienteSession.getEntidadExterna().getDesEntidad());
 		return "mesa_parte/expedienteDocumentoExterno";
 	}
 	
@@ -267,6 +278,7 @@ public class ExpedienteController {
 					GsonBuilder builder = new GsonBuilder();
 			        Gson gson = builder.create();
 					model.addAttribute("jsonListDocExt", gson.toJson(listaDocExternos));
+					System.out.println(gson.toJson(listaDocExternos));
 				}
 				
 				
@@ -336,22 +348,149 @@ public class ExpedienteController {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/saveExpediente.htm", method = RequestMethod.POST)
 	public @ResponseBody String saveExpediente(@ModelAttribute(value="expedienteVOBuscar") ExpedienteVO expedienteVOBuscar , ModelMap model,HttpServletRequest request) throws Exception 
 	{
 		
 		Expediente expedienteSession = (Expediente)request.getSession().getAttribute("__Expediente_Session");
 		List<DocumentoVO> listaDocExtsession = (List<DocumentoVO>)request.getSession().getAttribute("__listaDoc_Externo");
+		String codUOusuario = request.getSession().getAttribute("UOCodigo")!=null?String.valueOf(request.getSession().getAttribute("UOCodigo")):"";
 		
 		if(expedienteSession!=null){
 			if(expedienteSession.getCodExpediente()==null){
-				numeracionDocumentoManager.add(expedienteSession.getNumeracionDocumento());
 				
+				
+				//INI : REGISTRAR NumeracionDocumento
+				NumeracionDocumento numeracionDocumento = expedienteSession.getNumeracionDocumento();
+				//Se obtiene el siguiente numero de documento
+				Integer numDocumento = numeracionDocumentoManager.searchNextNumeroDocumento(numeracionDocumento);
+				numeracionDocumento.setNumDocumento(numDocumento);
+				numeracionDocumentoManager.add(numeracionDocumento);
+				//FIN
+				
+				
+				//INI : REGISTRAR Expediente
 				expedienteSession.setFecCreacion(new Date());
 				expedienteManager.add(expedienteSession);
+				//FIN
+				
+				
+				//INI : Registrar Documento
+				
+				EstadosDocumento estadosDocumento =new EstadosDocumento();
+				estadosDocumento.setCodEstDocumento(Constants.EstadoDocumentos.ESTADO_REGISTRADO);//colocar en constante estadodocumento registrado=1
+				
+				Documento documento;
+				ControlTipoTramite controlTipoTramite;
+				Derivar derivar;
+				DerivacionAccion derivacionAccion;
+				Accion accion;
+				for(DocumentoVO docext:listaDocExtsession){
+					if("S".equals(docext.getDocSession())){
+						documento = new Documento();
+						controlTipoTramite = new ControlTipoTramite();
+						controlTipoTramite.setCodTipoTramite(Integer.parseInt(docext.getCodTipoTramite()));
+						//documento.setAnularDocumentos(anularDocumentos);
+						//documento.setCodDocumento(codDocumento);AUTOGENERADO
+						documento.setCodTipDocumento(numeracionDocumento.getTipoDocumento().getCodTipDocumento());//TIPO_DOCUMENTO =17
+						documento.setCodUsuCreacion(expedienteSession.getCodUsuCreacion());
+						//documento.setCodUsuModificacion(codUsuModificacion);
+						documento.setControlTipoTramite(controlTipoTramite);
+						//documento.setDerivars(derivars);
+						documento.setDescripcion(docext.getDescripcion());
+						documento.setDesNumDocumento(docext.getDesNumDocumento());
+						documento.setEstadosDocumento(estadosDocumento);
+						documento.setExpediente(expedienteSession);//revisar que devuelva ID
+						documento.setFecCreacion(expedienteSession.getFecCreacion());
+						//documento.setFecModificacion(fecModificacion);
+						//documento.setIncidenciaMensajerias(incidenciaMensajerias);					
+						documento.setIndDocExterno(Constants.IND_DOC_EXTERNO);
+						documento.setNumeracionDocumento(numeracionDocumento);
+						documentoManager.add(documento);
+					
+						//Registrar Derivar
+						derivar = new Derivar();
+						//PRIMER REGISTRO
+						
+						//derivar.setAtenders(atenders);
+						//derivar.setCodDerivacion(codDerivacion);//AUTO GENERADO
+						derivar.setCodEntidadOrigen(Integer.parseInt(docext.getCodEntidad()));
+						//derivar.setCodEntidadDestino(codEntidadDestino);
+						derivar.setCodUoDestino(Integer.parseInt(codUOusuario));
+						//derivar.setCodUoEnvioEntExterna(codUoEnvioEntExterna);
+						//derivar.setCodUoOrigen(Integer.parseInt(codUOusuario));
+						derivar.setCodUsuCreacion(expedienteSession.getCodUsuCreacion());
+						//derivar.setCodUsuModificacion(codUsuModificacion);
+						derivar.setCodUsuRecepcion(expedienteSession.getCodUsuCreacion());//consultar
+						//derivar.setDerivacionAccions(derivacionAccions);
+						//derivar.setDevolucions(devolucions);
+						derivar.setDocumento(documento);
+						derivar.setFecCreacion(expedienteSession.getFecCreacion());
+						//derivar.setFecModificacion(fecModificacion);
+						derivar.setFecRecepcion(expedienteSession.getFecCreacion());
+						derivar.setIndAtencion(Constants.IND_INICIAL_DEFAULT);//SE ENVIA POR DEFAULT 0
+						derivar.setIndDerPersona(Constants.IND_INICIAL_DEFAULT);//SE ENVIA POR DEFAULT 0
+						derivar.setIndDevolucion(Constants.IND_INICIAL_DEFAULT);//SE ENVIA POR DEFAULT 0
+						//derivar.setIndDocumento(indDocumento);
+						derivar.setIndEnvioEntExterna(Constants.IND_INICIAL_DEFAULT);//SE ENVIA POR DEFAULT 0
+						derivar.setIndRecepcion(Constants.EstadoRecepcion.IND_RECEPCION_EXT);
+						derivar.setIndResAtencion(Constants.EstadoResponsableAtencion.IND_RESPONSABLE_EXT_UO);
+						//derivar.setPersonal(personal);
+						derivarManager.add(derivar);
+						
+						//SEGUNDO REGISTRO
+						for(UnidadOrganicaVO uoVO:docext.getListaUO()){
+							derivar = new Derivar();
+							//derivar.setAtenders(atenders);
+							//derivar.setCodDerivacion(codDerivacion);//AUTO GENERADO
+							//derivar.setCodEntidadOrigen(Integer.parseInt(docext.getCodEntidad()));
+							//derivar.setCodEntidadDestino(codEntidadDestino);
+							derivar.setCodUoDestino(Integer.parseInt(uoVO.getCodUO()));
+							//derivar.setCodUoEnvioEntExterna(codUoEnvioEntExterna);
+							derivar.setCodUoOrigen(Integer.parseInt(codUOusuario));
+							derivar.setCodUsuCreacion(expedienteSession.getCodUsuCreacion());
+							//derivar.setCodUsuModificacion(codUsuModificacion);
+							//derivar.setCodUsuRecepcion(codUsuRecepcion);//consultar
+							//derivar.setDerivacionAccions(derivacionAccions);
+							//derivar.setDevolucions(devolucions);
+							derivar.setDocumento(documento);
+							derivar.setFecCreacion(expedienteSession.getFecCreacion());
+							//derivar.setFecModificacion(fecModificacion);
+							//derivar.setFecRecepcion(fecRecepcion);
+							derivar.setIndAtencion(Constants.IND_INICIAL_DEFAULT);
+							derivar.setIndDerPersona(Constants.IND_INICIAL_DEFAULT);
+							derivar.setIndDevolucion(Constants.IND_INICIAL_DEFAULT);
+							derivar.setIndDocumento(Constants.IndicadorDerivacion.IND_DERIVACION_UO);
+							derivar.setIndEnvioEntExterna(Constants.IND_INICIAL_DEFAULT);
+							derivar.setIndRecepcion(Constants.EstadoRecepcion.IND_RECEPCION_EXT);
+							derivar.setIndResAtencion(Constants.EstadoResponsableAtencion.IND_RESPONSABLE_UO_UO);
+							//derivar.setPersonal(personal);
+							
+							derivarManager.add(derivar);
+							
+							//INI : REGISTRAR Derivacion_Accion
+							for(AccionVO accionVO:uoVO.getListaAccion()){
+								accion = new Accion();
+								accion.setCodAccion(Integer.parseInt(accionVO.getCodAccion()));
+								
+								derivacionAccion = new DerivacionAccion();
+								derivacionAccion.setAccion(accion);
+								//derivacionAccion.setCodDerAccion(codDerAccion);//AUTO GENERADO
+								derivacionAccion.setCodUsuCreacion(expedienteSession.getCodUsuCreacion());
+								//derivacionAccion.setCodUsuModificacion(codUsuModificacion);
+								derivacionAccion.setDerivar(derivar);
+								derivacionAccion.setFecCreacion(expedienteSession.getFecCreacion());
+								//derivacionAccion.setFecModificacion(fecModificacion);
+								derivacionAccionManager.add(derivacionAccion);
+							}
+							//FIN
+						}
+					}
+				}
+				//FIN 
 				
 			}else{
-				
 				expedienteSession.setCodUsuModificacion(expedienteVOBuscar.getCodUsuario());
 				expedienteSession.setFecModificacion(new Date());
 				expedienteManager.update(expedienteSession);
@@ -363,7 +502,7 @@ public class ExpedienteController {
 	
 
 		
-		return "";
+		return "succes";
 	}
 	@RequestMapping(value = "/addExpediente.htm", method = RequestMethod.POST)
 	public @ResponseBody String addExpediente(@ModelAttribute(value="expedienteVO") ExpedienteVO expedienteVO , ModelMap model,HttpServletRequest request) throws Exception 
@@ -376,6 +515,7 @@ public class ExpedienteController {
 				//ENTIDAD_EXTERNA(FK)
 				EntidadExterna entidadExterna = new EntidadExterna();
 				entidadExterna.setCodEntidad(Integer.parseInt(expedienteVO.getCodEntidad()));
+				entidadExterna.setDesEntidad(expedienteVO.getDesEntidad());
 				
 				//ENTIDAD ESTADO_EXPEDIENTE (FK)
 				EstadoExpediente estadoExpediente = new EstadoExpediente();
@@ -394,7 +534,7 @@ public class ExpedienteController {
 				numeracionDocumento.setCodUsuCreacion(expedienteVO.getCodUsuario());
 				numeracionDocumento.setFecCreacion(new Date());
 				numeracionDocumento.setIndExpediente(expedienteVO.getIndExpediente());
-				numeracionDocumento.setIndEstado("1");
+				numeracionDocumento.setIndEstado(Constants.ESTADO_ACTIVO);
 				//numeracionDocumentoManager.add(numeracionDocumento);
 				
 				
@@ -408,7 +548,6 @@ public class ExpedienteController {
 				}
 				
 				expediente.setCodUsuCreacion(expedienteVO.getCodUsuario());
-				
 				expediente.setDesAsunto(expedienteVO.getDesAsunto());
 				expediente.setDescripcion(expedienteVO.getDescripcion());
 				expediente.setDesDocumento(expedienteVO.getDesDocumento());

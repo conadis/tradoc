@@ -22,6 +22,10 @@ public class NumeracionDocumentoManagerImpl extends ServiceImpl<NumeracionDocume
 	protected Dao<NumeracionDocumento> getDAO() {
 		return numeracionDocumentoDAO;
 	}
+	
+	public Integer searchNextNumeroDocumento(NumeracionDocumento numeracionDocumento) throws Exception{
+		return numeracionDocumentoDAO.searchNextNumeroDocumento(numeracionDocumento);
+	}
 
 	
 
