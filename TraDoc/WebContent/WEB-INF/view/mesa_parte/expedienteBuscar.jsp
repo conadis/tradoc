@@ -467,7 +467,7 @@
 </head>
 
 <body>
-<!--  	<div id="block-grid">-->
+  	<div id="block-grid">
 		
 		
 		<fieldset class="scheduler-border">
@@ -476,10 +476,9 @@
 			<form:form id="frmBuscarExpediente" enctype="multipart/form-data" class="scrollbar" method="post" modelAttribute="expedienteVOBuscar">
 					<ul>
 						<table>
-							<thead>
+							<tbody>
 								<tr>
-									<td></td>
-									<td>
+									<td colspan="6">
 										<div class="table-grid">
 										<div class="tr-grid">
 											<div class="td-grid">
@@ -494,10 +493,8 @@
 											</div>
 										</div>	
 										</div>
-									</td>	
+									</td>
 								</tr>
-							</thead>
-							<tbody>
 								<tr>
 									<td>Expediente :</td>
 									<td>
@@ -564,6 +561,7 @@
 					</ul>
 					
 		<!-- Grilla -->
+		<ul>
 		<fieldset class="scheduler-border">
 			<legend class="scheduler-border"> Documentos Externos </legend>
 			<table id="listDocExtBus" />
@@ -628,6 +626,7 @@
 								</div>
 										
 			</form:form>
+			</ul>
 			
 		
 		
@@ -639,7 +638,7 @@
 
 
 		
-	<!--  </div>-->
+	</div>
 
 	<div id="up" class="up"></div>
 	<div id="expedienteAgregarForm"></div>

@@ -42,7 +42,6 @@
 	                    
 	                    $('#cmbRemitenteAdd').change(function(){
 	                    	var tdesent = $('#cmbRemitenteAdd option:selected').text();
-	                    	alert(tdesent);
 	                        $('#hdnDesEntidad').val(tdesent);
 	                    });
 					
