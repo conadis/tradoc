@@ -78,12 +78,15 @@
 
 	$(document).ready(
 					function() {
-						$('#cmbRemitenteBus').multiselect({
+						
+						window.prettyPrint() && prettyPrint();
+						
+					/*	$('#cmbRemitenteBus').multiselect({
 						    includeSelectAllOption: true,
 							enableCaseInsensitiveFiltering: true, 
 							buttonClass: 'validate[required] multiselect dropdown-toggle btn btn-default'
 						});
-						$('.btn-group button').val($('#cmbRemitenteBus').val());
+						$('.btn-group button').val($('#cmbRemitenteBus').val());*/
 					
 						$('#boxclose').click(function(){
 				            $('#box').animate({'top':'30%'},500,function(){
@@ -331,14 +334,12 @@
 		 					if(data == 'succes'){
 		 						$("#grdDocExt").hide();
 		 						limpiarBusquedaExpediente();
-		 						
 		 						var cldat = [];
 		 						llenarGridDocumentoExterno(cldat);
 								llenarGridDocumentoInterno(cldat);
 		 						alert("Se registró correctamente el expediente");
 		 					}else{
 		 						if(data == 'error'){
-		 							
 		 							alert("Ocurrió un error al guardar los cambios , consulte con el administrador");
 										
 		 						}
@@ -384,9 +385,17 @@
 								     $("#txtDiasBus").val(dat[0].candia);
 								     $("#cmbRemitenteBus").val(dat[0].codent);
 								     
+								    /* $("#txtExpAnioBus").attr('disabled',true);
+								     $("#txtExpNumeBus").attr('disabled',true);
+								     $("#cmbTipoExpBus").attr('disabled',true);*/
+								     
 								     $("#grdDocExt").show();
 								     
 								     var datjsonde = '${jsonListDocExt}';
+								     alert(datjsonde);
+								     alert(eval(datjsonde));
+								     var j = JSON.parse(datjsonde);
+								     alert(j);
 								     llenarGridDocumentoExterno(datjsonde);
 									 //llenarGridDocumentoInterno(hh);
 										
@@ -433,9 +442,9 @@
         
      function limpiarBusquedaExpediente(){
     	 $("#hdnCodExpediente").val("");
-		 $("#txtExpAnioBus").val(""); 
+		 $("#txtExpAnioBus").val("2015"); 
 		 $("#txtExpNumeBus").val(""); 
-		 $("#cmbTipoExpBus").val("");
+		 $("#cmbTipoExpBus").val("E");
 		 $("#txtFechaIngresoBus").val("");
 		 $("#txtCreadoPorBus").val(""); 
 		 $("#txtDocumentoBus").val("");
@@ -458,12 +467,12 @@
 </head>
 
 <body>
-	<div id="block-grid">
+<!--  	<div id="block-grid">-->
 		
 		
 		<fieldset class="scheduler-border">
 					<legend class="scheduler-border">Buscar Expediente</legend>
-		<div id="container-search" style="padding: 0px 175px 0px 0px;">
+	 	<div id="container-search" style="padding: 0px 175px 0px 0px;"> 
 			<form:form id="frmBuscarExpediente" enctype="multipart/form-data" class="scrollbar" method="post" modelAttribute="expedienteVOBuscar">
 					<ul>
 						<table>
@@ -622,7 +631,7 @@
 			
 		
 		
-		</div>
+		 </div> 
 </fieldset>
 		
 	
@@ -630,7 +639,7 @@
 
 
 		
-	</div>
+	<!--  </div>-->
 
 	<div id="up" class="up"></div>
 	<div id="expedienteAgregarForm"></div>

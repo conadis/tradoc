@@ -39,6 +39,12 @@
 	                            $('#overlay').fadeOut('fast');
 	                        });
 	                    });
+	                    
+	                    $('#cmbRemitenteAdd').change(function(){
+	                    	var tdesent = $('#cmbRemitenteAdd option:selected').text();
+	                    	alert(tdesent);
+	                        $('#hdnDesEntidad').val(tdesent);
+	                    });
 					
 	                    $('#cmbRemitenteAdd').multiselect({
 						    includeSelectAllOption: true,
@@ -58,7 +64,7 @@
 						 					if(data =='false'){
 						 						alert("Ya existe el expediente, consulte con el administrador");
 						 					}else{
-						 						 data = JSON.parse(data)
+						 						 data = JSON.parse(data);
 						 						
 						 						
 						 						alert("Expediente guardado correctamente");
@@ -70,13 +76,14 @@
 												 $("#txtCreadoPorBus").val(data.codUsuCreacion); 
 												 $("#txtDocumentoBus").val(data.desDocumento);
 												 $("#txtAsuntoBus").val(data.desAsunto);
-											     $("#txtInteresadoBus").val(data.interesado);//falta
+											     $("#txtInteresadoBus").val(data.interesado);
 											     $("#txtUtdBus").val(data.desUtd);
 											     $("#txtDetalleBus").val(data.detalle);
 											     $("#txtDescripcionBus").val(data.descripcion);
 											     $("#txtNumFolBus").val(data.numFolios);
 											     $("#txtDiasBus").val(data.canDias);
 											     $("#cmbRemitenteBus").val(data.entidadExterna.codEntidad);
+											     $("#cmbRemitenteBus").selected = true;
 											     $("#hdnCodEstadoExpediente").val(data.estadoExpediente.codEstadoExpediente);
 											     $("#grdDocExt").show();
 											     
@@ -180,7 +187,8 @@
 															<form:option value="1" label="SUNAT" />
 															<form:option value="2" label="MEF" />
 															<form:option value="3" label="MINISTERIO VIVIENDA" />
-													</form:select>
+									</form:select>
+									<form:hidden id="hdnDesEntidad" path="desEntidad"/>
               
 										
                             	   </td>

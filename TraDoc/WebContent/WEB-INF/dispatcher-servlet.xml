@@ -91,6 +91,8 @@
     <bean id="derivarManager" class="pe.conadis.tradoc.service.impl.DerivarManagerImpl"></bean>
     <bean id="documentoDAO" class="pe.conadis.tradoc.dao.impl.DocumentoDAOImpl"></bean>
     <bean id="documentoManager" class="pe.conadis.tradoc.service.impl.DocumentoManagerImpl"></bean>
+    <bean id="derivacionAccionDAO" class="pe.conadis.tradoc.dao.impl.DerivacionAccionDAOImpl"></bean>
+    <bean id="derivacionAccionManager" class="pe.conadis.tradoc.service.impl.DerivacionAccionManagerImpl"></bean>
     
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 		

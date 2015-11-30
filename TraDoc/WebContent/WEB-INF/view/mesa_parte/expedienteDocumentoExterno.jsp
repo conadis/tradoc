@@ -36,6 +36,10 @@
 
 					var hh = [];
 					var dataJs = '${dataJsonUo}';
+					var codentExtval = '${codentExt}';
+					var desentExtval = '${desentExt}';
+					$('#txtEntidadExtHiden').val(codentExtval);
+					$('#txtEntidadExt').val(desentExtval);
 					llenarGridUO(eval(dataJs));
                     
                     
@@ -71,7 +75,6 @@
 						 						
 											$('#boxExt').animate({'top':'100px'},500,function(){
 					                            $('#overlayExt').fadeOut('fast');
-					                            	tudata = eval(data);
 					                            	
 					                            	var pageSize = jQuery("#listDocExtBus").getGridParam("rowNum");
 										            var totalRecords = jQuery("#listDocExtBus").getGridParam('records');
@@ -210,7 +213,7 @@
                                 <tr>
                             	   <td>Enviado Por:</td>
                             	   <td colspan="2">
-                            	   		<form:input id="txtEntidadExt" path="desEntidadExtUO" readonly="true" style="width: 80px; height: 25px;" type="text" class="input-border"/>
+                            	   		<form:input id="txtEntidadExt" path="desEntidadExtUO" readonly="true" style="width: 150px; height: 25px;" type="text" class="input-border"/>
                             	   		<form:hidden id="txtEntidadExtHiden" path="codEntidad" />
                             	   </td> 
                             	   <td>Nro.Documento:</td>
