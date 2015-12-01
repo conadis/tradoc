@@ -394,8 +394,6 @@
 								     var datjsonde = '${jsonListDocExt}';
 								     alert(datjsonde);
 								     alert(eval(datjsonde));
-								     var j = JSON.parse(datjsonde);
-								     alert(j);
 								     llenarGridDocumentoExterno(datjsonde);
 									 //llenarGridDocumentoInterno(hh);
 										
@@ -507,7 +505,7 @@
 												
 												</td>
 												<td><form:input id="txtExpNumeBus" style="width: 40px;"  type="text" class="input-border" path="numDocumento" /></td>
-												<td><form:select id="cmbTipoExpBus" path="indExpediente"  style="width: 60px;"  class="select-box">
+												<td><form:select id="cmbTipoExpBus" path="indExpediente"  style="width: 80px;"  class="select-box">
 														<form:option value="E" label="E" />
 														<form:option value="I" label="I" />
 												</form:select></td>
@@ -558,10 +556,10 @@
 							</tbody>
 						</table>
 
-					</ul>
+					
 					
 		<!-- Grilla -->
-		<ul>
+		
 		<fieldset class="scheduler-border">
 			<legend class="scheduler-border"> Documentos Externos </legend>
 			<table id="listDocExtBus" />
